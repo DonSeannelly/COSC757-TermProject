@@ -74,6 +74,9 @@ cor(BTC_staggered_returns, SQ_staggered_returns)
 
 # Build regression model
 
+model <- lm(formula = SQ_staggered_returns$SQ.Close ~ BTC_staggered_returns$BTC.USD.Close, x=BTC_staggered_returns, y=SQ_staggered_returns)
+
+modelSummary <- summary(model)
 
 
 
