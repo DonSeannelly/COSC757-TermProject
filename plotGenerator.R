@@ -3,11 +3,16 @@ if (!require("quantmod")) {
   install.packages("quantmod")
   library(quantmod)
 }
-# Get me my beloved pipe operator!
+# Get pipe operator
 if (!require("magrittr")) {
   install.packages("magrittr")
   library(magrittr)
 }
+if (!require("e1071")) {
+  install.packages("e1071")
+  library(e1071)
+}
+
 
 getSymbols(c("SQ","BTC-USD"), src="yahoo",from="2017-05-01",to="2018-05-01")
 
@@ -46,6 +51,28 @@ stock_change = stocks %>% log %>% diff
 
 plot(as.zoo(stock_change), screens = 1, lty = 1:3, xlab = "Date", ylab = "Log Difference")
 legend("topleft", c("BTC-USD", "SQ"), lty = 1:3, cex = 0.5)
+
+# Stagger the data for regression
+
+SQ_staggered_returns <- stock_return$SQ.Close[-c(1),]
+BTC_staggered_returns <- head(stock_return$BTC.USD.Close,-1)
+
+# More plots
+
+scatter.smooth(x=BTC_staggered_returns, y=SQ_staggered_returns, main="SQ Returns ~ BTC Returns")
+
+par(mfrow=c(1, 2))  # divide graph area in 2 columns
+plot(density(SQ_staggered_returns), main="Density Plot: SQ Returns", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(SQ_staggered_returns), 2)))  # density plot for SQ
+polygon(density(SQ_staggered_returns), col="red")
+
+plot(density(BTC_staggered_returns), main="Density Plot: BTC Returns", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(BTC_staggered_returns), 2)))  # density plot for BTC
+polygon(density(BTC_staggered_returns), col="red")
+
+# Examine correlation
+
+cor(BTC_staggered_returns, SQ_staggered_returns)
+
+# Build regression model
 
 
 

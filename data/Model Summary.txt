@@ -1,0 +1,18 @@
+Call:
+lm(formula = SQ_staggered_returns$SQ.Close ~ BTC_staggered_returns$BTC.USD.Close, 
+    x = BTC_staggered_returns, y = SQ_staggered_returns)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.9657 -0.2613 -0.0675  0.2175  1.0708 
+
+Coefficients:
+                                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                         1.262146   0.048495   26.03   <2e-16 ***
+BTC_staggered_returns$BTC.USD.Close 0.128606   0.008783   14.64   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4039 on 249 degrees of freedom
+Multiple R-squared:  0.4627,	Adjusted R-squared:  0.4605 
+F-statistic: 214.4 on 1 and 249 DF,  p-value: < 2.2e-16
